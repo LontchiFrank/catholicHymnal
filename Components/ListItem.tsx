@@ -1,12 +1,13 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, ViewToken, ScrollView, View, Text } from "react-native";
 import Animated, {
 	useAnimatedStyle,
 	withTiming,
 } from "react-native-reanimated";
 import { PaperProvider, Card } from "react-native-paper";
+import * as Font from "expo-font";
 
 type ListItemProps = {
 	viewableItems: Animated.SharedValue<ViewToken[]>;
@@ -35,6 +36,19 @@ const ListItem: React.FC<ListItemProps> = React.memo(
 					},
 				],
 			};
+		}, []);
+
+		const [fontsLoaded, setFontsLoaded] = useState(false);
+		useEffect(() => {
+			async function loadFonts() {
+				await Font.loadAsync({
+					Dreams: require("../assets/fonts/dream.otf"),
+					Nunito: require("../assets/fonts/Nunito.ttf"),
+				});
+				setFontsLoaded(true);
+			}
+
+			loadFonts();
 		}, []);
 
 		return (
@@ -72,6 +86,7 @@ const ListItem: React.FC<ListItemProps> = React.memo(
 								fontSize: 18,
 								fontWeight: "600",
 								color: "#193d69",
+								// fontFamily: "Nunito",
 							}}
 							subtitleStyle={{ fontSize: 14 }}
 							left={({ size }: { size: number }) => (

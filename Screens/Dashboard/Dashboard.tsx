@@ -18,10 +18,17 @@ import { db } from "../../FirebaseConfig";
 import { PaperProvider, Card } from "react-native-paper";
 import { useSharedValue } from "react-native-reanimated";
 import { ListItem } from "../../Components/ListItem";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../types/type";
 import { StatusBar } from "expo-status-bar";
 import * as Font from "expo-font";
 
-function Dashboard() {
+type HomeScreenNavigationProp = StackNavigationProp<
+	RootStackParamList,
+	"DetailScreen"
+>;
+
+function Dashboard({ navigation }: any) {
 	const [loading, setLoading] = useState(true);
 	const [hymnals, setHymnals] = useState([]);
 	const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -52,7 +59,7 @@ function Dashboard() {
 					id: doc.id,
 					...doc.data(),
 				}));
-
+				console.log(items);
 				setHymnals(items);
 				setLoading(false);
 			} catch (error) {
@@ -94,11 +101,11 @@ function Dashboard() {
 						}}>
 						<Text
 							style={{
-								fontSize: 32,
-								fontWeight: "bold",
+								fontSize: 39,
+								fontWeight: "700",
 								color: "#fff",
 								paddingBottom: 16,
-								fontFamily: "Nunito",
+								fontFamily: "Dreams",
 							}}>
 							All Hymns
 						</Text>
@@ -115,7 +122,14 @@ function Dashboard() {
 								viewableItems.value = vItems;
 							}}
 							renderItem={({ item }) => {
-								return <ListItem item={item} viewableItems={viewableItems} />;
+								return (
+									<TouchableOpacity
+										onPress={() =>
+											navigation.navigate("DetailScreen", { item })
+										}>
+										<ListItem item={item} viewableItems={viewableItems} />
+									</TouchableOpacity>
+								);
 							}}
 						/>
 					</View>
@@ -197,6 +211,7 @@ const styles = StyleSheet.create({
 	flatListViewFirst: {
 		height: "30%",
 		width: "100%",
+		// backgroundColor: "#e7c6ff",
 		backgroundColor: "#281b6a",
 		paddingTop: 60,
 		position: "absolute",

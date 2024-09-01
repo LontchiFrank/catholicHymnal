@@ -10,6 +10,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Dashboard from "./Screens/Dashboard/Dashboard";
+import Detail from "./Screens/Detail/Detail";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -19,7 +20,7 @@ const screenOptions: any = {
 	headerShown: false,
 	tabBarStyle: {
 		position: "absolute",
-		botton: 0,
+		bottom: 14,
 		right: 0,
 		left: 0,
 		elevation: 0,
@@ -78,7 +79,7 @@ function MainTabs() {
 					),
 				}}
 			/>
-			<Tab.Screen
+			{/* <Tab.Screen
 				name="Prayers"
 				component={Dashboard}
 				options={{
@@ -96,7 +97,7 @@ function MainTabs() {
 						</View>
 					),
 				}}
-			/>
+			/> */}
 			<Tab.Screen
 				name="Category"
 				component={Dashboard}
@@ -129,7 +130,7 @@ export default function App() {
 					component={MainTabs}
 					options={{ headerShown: false }}
 				/>
-				{/* <Stack.Screen name="DetailScreen" component={DetailScreen} /> */}
+				<Stack.Screen name="DetailScreen" component={Detail} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
